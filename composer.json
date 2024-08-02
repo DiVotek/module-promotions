@@ -1,0 +1,21 @@
+{
+   "name": "divotek_smart/promotions-module",
+   "type": "laravel-module",
+   "description": "Promotions module for Divotek SMART",
+   "authors": [
+      {
+         "name": "Divotek SMART",
+         "email": "dev@divotek.com"
+      }
+   ],
+   "autoload": {
+      "psr-4": {
+         "Modules\\Promotions\\": ""
+      }
+   },
+   "require": {
+      "php": "^8.2"
+   },
+   "version": "1.0.0",
+   "minimum-stability": "dev"
+}
