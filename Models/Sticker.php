@@ -8,6 +8,8 @@ use App\Traits\HasTimestamps;
 use App\Traits\HasTranslate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Modules\Product\Models\Product;
 
 class Sticker extends Model
 {
@@ -42,5 +44,10 @@ class Sticker extends Model
     public static function getTypes(): array
     {
         return array_map(fn ($type) => __($type), self::types);
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'product_stickers', 'product_id', 'sticker_id');
     }
 }
