@@ -14,12 +14,11 @@ return new class extends Migration
     {
         Schema::create(Promotion::getDb(), function (Blueprint $table) {
             $table->id();
-            $table->integer('type');
             $table->string('name');
-            $table->json('value')->nullable();
-            $table->integer('sticker_id')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
+            $table->integer('sticker_id')->nullable();
+            $table->integer('value')->nullable();
             $table->integer('status')->default(1);
             Promotion::timestampFields($table);
         });

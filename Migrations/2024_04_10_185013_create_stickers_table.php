@@ -14,8 +14,9 @@ return new class extends Migration
     {
         Schema::create(Sticker::getDb(), function (Blueprint $table) {
             $table->id();
-            $table->integer('type');
             $table->string('name');
+            $table->integer('type');
+            $table->integer('sorting')->default(0);
             $table->string('color')->nullable();
             $table->string('image')->nullable();
             $table->integer('status')->default(1);

@@ -3,7 +3,6 @@
 namespace Modules\Promotions\Admin;
 
 use App\Filament\Resources\TranslateResource\RelationManagers\TranslatableRelationManager;
-use App\Services\MultiLang;
 use Filament\Forms\Components\Section;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Tables\Actions\Action;
@@ -29,7 +28,7 @@ class PromotionResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('Category');
+        return __('Promotions');
     }
 
     public static function getModelLabel(): string
@@ -48,12 +47,13 @@ class PromotionResource extends Resource
             ->schema([
                 Section::make()
                     ->schema([
-                        Schema::getSelect('type', Promotion::getTypes()),
                         Schema::getName(),
                         Schema::getStatus(),
                         Schema::getDateTime('start_date'),
                         Schema::getDateTime('end_date'),
-                        TextInput::make('value')->numeric()->required(),
+                        TextInput::make('value')
+                            ->numeric()
+                            ->required(),
                         Schema::getSelect('sticker_id', Sticker::query()->pluck('name', 'id')->toArray())
                     ])
                 ]);

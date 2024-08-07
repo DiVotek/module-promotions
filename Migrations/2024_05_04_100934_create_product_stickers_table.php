@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('product_stickers', function (Blueprint $table) {
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('sticker_id');
-            $table->integer('price');
         });
     }
 

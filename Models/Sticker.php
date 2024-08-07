@@ -2,28 +2,24 @@
 
 namespace Modules\Promotions\Models;
 
+use App\Traits\HasSorting;
 use App\Traits\HasStatus;
 use App\Traits\HasTable;
 use App\Traits\HasTimestamps;
 use App\Traits\HasTranslate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Modules\Product\Models\Product;
+use Nwidart\Modules\Facades\Module;
 
 class Sticker extends Model
 {
     use HasFactory;
     use HasTable;
+    use HasSorting;
     use HasStatus;
     use HasTimestamps;
     use HasTranslate;
-
-    public const TABLE = 'stickers';
-
-    public const LATEST = 1;
-
-    protected $table = self::TABLE;
 
     public const TYPE_IMAGE = 0;
 
@@ -34,7 +30,7 @@ class Sticker extends Model
         self::TYPE_TEXT => 'text',
     ];
 
-    protected $fillable = ['type', 'name', 'color', 'image'];
+    protected $fillable = ['name', 'type', 'color', 'image'];
 
     public static function getDb(): string
     {
@@ -46,8 +42,10 @@ class Sticker extends Model
         return array_map(fn ($type) => __($type), self::types);
     }
 
-    public function products(): BelongsToMany
+    public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_stickers', 'product_id', 'sticker_id');
+        if (Module::find('Product') && Module::find('Product')->isEnabled()) {
+            return $this->belongsToMany(Product::class, 'product_stickers', 'product_id', 'sticker_id');
+        }
     }
 }

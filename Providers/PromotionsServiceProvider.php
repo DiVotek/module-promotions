@@ -20,6 +20,6 @@ class PromotionsServiceProvider extends ServiceProvider
 
     private function loadMigrations(): void
     {
-            $this->loadMigrationsFrom(module_path($this->moduleName, 'Migrations'));
+        $this->loadMigrationsFrom(module_path($this->moduleName, 'Migrations'));
     }
 }

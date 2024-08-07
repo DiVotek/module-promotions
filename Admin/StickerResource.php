@@ -4,12 +4,12 @@ namespace Modules\Promotions\Admin;
 
 use App\Filament\Resources\TranslateResource\RelationManagers\TranslatableRelationManager;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Tables\Actions\Action;
 use Modules\Promotions\Admin\StickerResource\Pages;
 use App\Services\Schema;
 use App\Services\TableSchema;
-use Filament\Forms\Components\Tabs;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -27,7 +27,7 @@ class StickerResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('Category');
+        return __('Promotions');
     }
 
     public static function getModelLabel(): string
@@ -46,10 +46,19 @@ class StickerResource extends Resource
             ->schema([
                 Section::make()
                     ->schema([
-                        Schema::getStickerType(),
                         Schema::getName(),
-                        Schema::getColor(),
-                        Schema::getImage()
+                        Schema::getSorting(),
+                        Schema::getSelect('type', Sticker::getTypes())
+                            ->label(__('Sticker type'))
+                            ->required()
+                            ->default(0)
+                            ->live(),
+                        Schema::getColor()->hidden(function(Get $get): bool {
+                            return $get('type') != Sticker::TYPE_TEXT;
+                        }),
+                        Schema::getImage()->hidden(function(Get $get): bool {
+                            return $get('type') != Sticker::TYPE_IMAGE;
+                        })
                     ])
             ]);
     }
@@ -58,9 +67,9 @@ class StickerResource extends Resource
     {
         return $table
             ->columns([
-                TableSchema::getStickerType(),
                 TableSchema::getName(),
-                TableSchema::getColor(),
+                TableSchema::getStickerType(),
+                TableSchema::getSorting(),
                 TableSchema::getUpdatedAt()
             ])
             ->headerActions([
