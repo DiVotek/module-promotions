@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('product_promotions', function (Blueprint $table) {
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('promotion_id');
-            $table->integer('price');
         });
     }
 

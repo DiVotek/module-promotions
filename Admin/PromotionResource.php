@@ -14,6 +14,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Modules\Promotions\Admin\PromotionResource\RelationManagers\ProductsRelationManager;
 use Modules\Promotions\Models\Promotion;
 use Modules\Promotions\Models\Sticker;
 
@@ -94,6 +95,7 @@ class PromotionResource extends Resource
         return [
             RelationGroup::make('Seo and translates', [
                 TranslatableRelationManager::class,
+                ProductsRelationManager::class
             ]),
         ];
     }

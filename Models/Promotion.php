@@ -36,6 +36,6 @@ class Promotion extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'product_promotions', 'product_id', 'promotion_id')->withPivot('price');
+        return $this->belongsToMany(Product::class, 'product_promotions', 'product_id', 'promotion_id');
     }
 }
