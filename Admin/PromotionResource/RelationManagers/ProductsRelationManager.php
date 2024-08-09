@@ -54,7 +54,7 @@ class ProductsRelationManager extends RelationManager
             ->filters([
                 //
             ])
-            ->reorderable('product_promotions.sorting')
+            ->reorderable('sorting')
             ->headerActions([
                 Tables\Actions\AttachAction::make()
                     ->preloadRecordSelect()
@@ -69,7 +69,7 @@ class ProductsRelationManager extends RelationManager
                     ->modalWidth('lg')
                     ->form([
                         Schema::getSku(),
-                        Schema::getPrice(),
+                        Schema::getPrice(false),
                     ])
                     ->action(function ($record, $data) {
                         $record->update($data);

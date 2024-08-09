@@ -9,7 +9,7 @@ use App\Traits\HasTranslate;
 use Modules\Product\Models\Product;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Nwidart\Modules\Facades\Module;
 
 class Promotion extends Model
 {
@@ -34,8 +34,10 @@ class Promotion extends Model
         return 'promotions';
     }
 
-    public function products(): BelongsToMany
+    public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_promotions', 'product_id', 'promotion_id');
+        if (Module::find('Product') && Module::find('Product')->isEnabled()) {
+            return $this->belongsToMany(Product::class, 'product_promotions', 'product_id', 'promotion_id');
+        }
     }
 }

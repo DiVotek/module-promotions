@@ -76,6 +76,7 @@ class PromotionResource extends Resource
                     ->modalFooterActions([]),
 
             ])
+            ->reorderable('sorting')
             ->filters([
                 TableSchema::getFilterStatus(),
             ])
