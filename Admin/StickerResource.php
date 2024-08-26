@@ -10,6 +10,7 @@ use Filament\Tables\Actions\Action;
 use Modules\Promotions\Admin\StickerResource\Pages;
 use App\Services\Schema;
 use App\Services\TableSchema;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -51,14 +52,19 @@ class StickerResource extends Resource
                         Schema::getSelect('type', Sticker::getTypes())
                             ->label(__('Sticker type'))
                             ->required()
+                            ->helperText(__('Sticker type'))
                             ->default(0)
                             ->live(),
-                        Schema::getColor()->hidden(function(Get $get): bool {
-                            return $get('type') != Sticker::TYPE_TEXT;
-                        }),
-                        Schema::getImage()->hidden(function(Get $get): bool {
+                        ColorPicker::make('color')
+                            ->label(__('Color'))
+                            ->helperText(__('Sticker color'))
+                            ->required()
+                            ->string()->hidden(function (Get $get): bool {
+                                return $get('type') != Sticker::TYPE_TEXT;
+                            }),
+                        Schema::getImage()->hidden(function (Get $get): bool {
                             return $get('type') != Sticker::TYPE_IMAGE;
-                        })
+                        })->helperText(__('Sticker image')),
                     ])
             ]);
     }
@@ -73,12 +79,7 @@ class StickerResource extends Resource
                 TableSchema::getUpdatedAt()
             ])
             ->headerActions([
-                Action::make(__('Help'))
-                    ->iconButton()
-                    ->icon('heroicon-o-question-mark-circle')
-                    ->modalDescription(__('Summary'))
-                    ->modalFooterActions([]),
-
+                Schema::helpAction('Sticker help'),
             ])
             ->filters([
                 TableSchema::getFilterStatus(),

@@ -50,12 +50,15 @@ class PromotionResource extends Resource
                     ->schema([
                         Schema::getName(),
                         Schema::getStatus(),
-                        Schema::getDateTime('start_date'),
-                        Schema::getDateTime('end_date'),
+                        Schema::getDateTime('start_date')->helperText(__('Promotion start date')),
+                        Schema::getDateTime('end_date')->helperText(__('Promotion end date')),
                         TextInput::make('value')
                             ->numeric()
+                            ->helperText(__('Promotion discount value in percents'))
+                            ->suffix('%')
                             ->required(),
                         Schema::getSelect('sticker_id', Sticker::query()->pluck('name', 'id')->toArray())
+                            ->helperText(__('Promotion sticker'))
                     ])
                 ]);
     }
@@ -69,12 +72,7 @@ class PromotionResource extends Resource
                 TableSchema::getUpdatedAt(),
             ])
             ->headerActions([
-                Action::make(__('Help'))
-                    ->iconButton()
-                    ->icon('heroicon-o-question-mark-circle')
-                    ->modalDescription(__('Summary'))
-                    ->modalFooterActions([]),
-
+                Schema::helpAction('Promotion help'),
             ])
             ->reorderable('sorting')
             ->filters([
